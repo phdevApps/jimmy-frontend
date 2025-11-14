@@ -1,0 +1,2 @@
+https://unpkg.com/flickity@2.3.0/dist/flickity.css
+https://unpkg.com/flickity@2.3.0/dist/flickity.pkgd.min.js

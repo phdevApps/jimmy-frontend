@@ -1,0 +1,196 @@
+@font-face {
+    font-family: "DM Sans";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n4.c96ee13ba72b3b94416f74d69e5511ad0682c6f0.woff2?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=f1d5680061a200c0c14e64552c32258a132c39227caf7755ec3908edd7a83b6f") format("woff2"),
+        url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n4.a9ca3baffb915780e6561f29cd4b76fd6dc59966.woff?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=3c1cd41a9b4bc1cd11f5fd9ca1cf80ec2fca1d83d7ac0aa658e5c83d963ca9f4") format("woff");
+}
+
+@font-face {
+    font-family: "DM Sans";
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n5.9bce41f6331cb63f34699f22d94da6bf1cfe3e8d.woff2?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=7615677e2f38eb1db3bf2be1083f1988a0f851e17fafc26aa6a1ab6277432c7c") format("woff2"),
+        url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n5.70b8ec55e0ecc4f75b40227ca45418d24b40c1c0.woff?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=0a94307d4652e46fb352dd1eb47cd60aca5f6b922e15ebc7b130fcec521feaf8") format("woff");
+}
+
+@font-face {
+    font-family: "DM Sans";
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n7.de67cf0b3c4b00bc2ad78bdf7a4053fd24a634d0.woff2?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=c5bd5b5b17199397996119600c84c720991ed47959527878db7e7551dba33399") format("woff2"),
+        url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n7.f1bd199b88e7cf81f6e7f37d59d128ab08110c49.woff?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=8c4b8517d5293a3c9704486b7bb19063eee9c9f72a05b185ba177f1b37fac3d7") format("woff");
+}
+
+@font-face {
+    font-family: "DM Sans";
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+    src: url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_i4.81c3f37c3553c296af7cdb67d682c1c817cd316c.woff2?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=ef4a528c30b4ab38e25e6871ec9de5e9c42a634df192d349ee251146cd536854") format("woff2"),
+        url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_i4.c85472239ebdf69b9e77bcb3fc07af0eece64bda.woff?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=661293ba2aaa80a1a929f53fdbcd51d4e13eb0b4ed95bfa62c9231207819569e") format("woff");
+}
+
+@font-face {
+    font-family: "DM Sans";
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+    src: url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_i7.282fc4be4f4cb91ace6650817c64d4809a0635de.woff2?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=ab6a313be7cc7b791ac96fd9353c870041cae018545b4b78c5f88b68db9ad4e0") format("woff2"),
+        url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_i7.c025771a5b915365aeacefa5169ccada48918b65.woff?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=8446e3106d338c8882c7963dd61b6d7432403e268e85fa28b540273623b022fe") format("woff");
+}
+
+
+@font-face {
+    font-family: "DM Sans";
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n5.9bce41f6331cb63f34699f22d94da6bf1cfe3e8d.woff2?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=7615677e2f38eb1db3bf2be1083f1988a0f851e17fafc26aa6a1ab6277432c7c") format("woff2"),
+        url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n5.70b8ec55e0ecc4f75b40227ca45418d24b40c1c0.woff?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=0a94307d4652e46fb352dd1eb47cd60aca5f6b922e15ebc7b130fcec521feaf8") format("woff");
+}
+
+@font-face {
+    font-family: "DM Sans";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n4.c96ee13ba72b3b94416f74d69e5511ad0682c6f0.woff2?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=f1d5680061a200c0c14e64552c32258a132c39227caf7755ec3908edd7a83b6f") format("woff2"),
+        url("//jimmy.eu/cdn/fonts/dm_sans/dmsans_n4.a9ca3baffb915780e6561f29cd4b76fd6dc59966.woff?h1=MWQ2NDVlLTIuYWNjb3VudC5teXNob3BpZnkuY29t&h2=amltbXlldS5teXNob3BpZnkuY29t&h3=amltbXkuZXU&hmac=3c1cd41a9b4bc1cd11f5fd9ca1cf80ec2fca1d83d7ac0aa658e5c83d963ca9f4") format("woff");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.logolink.text-logo,
+.heading-font,
+.h1-xlarge,
+.h1-large,
+blockquote p,
+blockquote span,
+.customer-addresses .my-address .address-index {
+    font-style: normal;
+    font-weight: 500;
+    font-family: "DM Sans", sans-serif;
+}
+
+body,
+.body-font,
+.thb-product-detail .product-title {
+    font-style: normal;
+    font-weight: 400;
+    font-family: "DM Sans", sans-serif;
+}
+
+:root {
+    --mobile-swipe-width: calc(90vw - 15px);
+    --grid-width: 1280px;
+    --grid-width-row: 1380px;
+    --font-body-scale: 1.0;
+    --font-body-line-height-scale: 1.0;
+    --font-body-letter-spacing: 0.0em;
+    --font-announcement-scale: 1.0;
+    --font-body-medium-weight: 500;
+    --font-body-bold-weight: 700;
+    --font-heading-scale: 1.0;
+    --font-heading-line-height-scale: 1.0;
+    --font-heading-letter-spacing: -0.02em;
+    --font-navigation-scale: 1.0;
+    --font-product-price-scale: 1.0;
+    --font-product-title-scale: 1.0;
+    --font-product-title-line-height-scale: 1.0;
+    --button-letter-spacing: 0.0em;
+
+    --block-border-radius: 16px;
+    --button-border-radius: 25px;
+    --input-border-radius: 6px;
+
+    --bg-body: #f8f8f8;
+    --bg-body-rgb: 248, 248, 248;
+    --bg-body-darken: #f0f0f0;
+    --payment-terms-background-color: #f8f8f8;
+
+    --color-body: #191919;
+    --color-body-rgb: 25, 25, 25;
+    --color-heading: #191919;
+    --color-heading-rgb: 25, 25, 25;
+
+    --color-accent: #003586;
+    --color-accent-hover: #002762;
+    --color-accent-rgb: 0, 53, 134;
+    --color-border: #DADCE0;
+    --color-form-border: #D3D3D3;
+    --color-overlay-rgb: 159, 163, 167;
+
+    --shopify-accelerated-checkout-button-block-size: 50px;
+    --shopify-accelerated-checkout-inline-alignment: center;
+    --shopify-accelerated-checkout-skeleton-animation-duration: 0.25s;
+    --shopify-accelerated-checkout-button-border-radius: 25px;
+
+    --color-drawer-bg: #ffffff;
+    --color-drawer-bg-rgb: 255, 255, 255;
+
+    --color-announcement-bar-text: #ffffff;
+    --color-announcement-bar-bg: #003586;
+
+    --color-secondary-menu-text: #191919;
+    --color-secondary-menu-bg: #f8f8f8;
+
+    --color-header-bg: #f8f8f8;
+    --color-header-bg-rgb: 248, 248, 248;
+    --color-header-text: #191919;
+    --color-header-text-rgb: 25, 25, 25;
+    --color-header-links: #191919;
+    --color-header-links-rgb: 25, 25, 25;
+    --color-header-links-hover: #003586;
+    --color-header-links-hover-rgb: 0, 53, 134;
+    --color-header-icons: #2c2d2e;
+    --color-header-border: #E2E2E2;
+
+    --solid-button-background: #191919;
+    --solid-button-background-hover: #070707;
+    --solid-button-label: #ffffff;
+    --white-button-label: #191919;
+
+    --color-price: #003586;
+    --color-price-rgb: 0, 53, 134;
+    --color-price-discounted: #C62A32;
+
+    --color-star: #FFAA47;
+
+    --color-inventory-instock: #279A4B;
+    --color-inventory-lowstock: #e97f32;
+    --block-shadows: 0px 4px 6px rgba(0, 0, 0, 0.08);
+    --section-spacing-mobile: 50px;
+    --section-spacing-desktop: 80px;
+    --color-product-card-bg: rgba(0, 0, 0, 0);
+    --color-article-card-bg: #ffffff;
+    --color-badge-text: #ffffff;
+    --color-badge-sold-out: #6d6b6b;
+    --color-badge-sale: #c62a32;
+    --color-badge-preorder: #003586;
+    --badge-corner-radius: 14px;
+
+
+    --color-footer-heading: #ffffff;
+    --color-footer-heading-rgb: 255, 255, 255;
+    --color-footer-text: #ffffff;
+    --color-footer-text-rgb: 255, 255, 255;
+    --color-footer-link: #ffffff;
+    --color-footer-link-hover: #FFFFFF;
+    --color-footer-border: #868d94;
+    --color-footer-border-rgb: 134, 141, 148;
+    --color-footer-bg: #003586;
+}
