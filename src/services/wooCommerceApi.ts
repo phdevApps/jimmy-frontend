@@ -433,7 +433,7 @@ export const authenticateCustomer = async (email: string, password: string): Pro
     // Try to fetch customer profile using the user email from JWT response
     let customer: Customer;
     try {
-      customer = await getCustomerByEmail(userEmail);
+      customer = await getCustomerByEmail(userEmail, response.data);
       console.log('Existing customer found:', customer);
     } catch (error) {
       console.log('Customer not found in WooCommerce, creating new customer record');
@@ -463,24 +463,60 @@ export const authenticateCustomer = async (email: string, password: string): Pro
 };
 
 // New function to get customer by email
-export const getCustomerByEmail = async (email: string): Promise<Customer> => {
+export const getCustomerByEmail = async (email: string, res: any): Promise<Customer> => {
+  // {
+  //     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VhZS5qaW1teS5tZSIsImlhdCI6MTc2MzEyNzQ2OCwibmJmIjoxNzYzMTI3NDY4LCJleHAiOjE3NjM3MzIyNjgsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.YZwe5gTrfFH7zvHwj9o6Y4lHauTFe098rHE8zWxgr_E",
+  //     "user_email": "ahmed.fathy@amitintl.com",
+  //     "user_nicename": "ahmed-abdelaziz",
+  //     "user_display_name": "ahmed abdelaziz"
+  // }
+
+  // {
+  //     "code": "[jwt_auth] invalid_email",
+  //     "message": "Unknown email address. Check again or try your username.",
+  //     "data": {
+  //         "status": 403
+  //     }
+  // }
+
+  // {
+  //     "code": "[jwt_auth] incorrect_password",
+  //     "message": "<strong>Error:<\/strong> The password you entered for the email address <strong>ahmed.fathy@amitintl.com<\/strong> is incorrect. <a href=\"https:\/\/uae.jimmy.me\/en\/my-account\/lost-password\/\">Lost your password?<\/a>",
+  //     "data": {
+  //         "status": 403
+  //     }
+  // }
+
   try {
-    console.log('Fetching customer by email:', email);
+    const {
+      token,
+      user_email,
+      user_nicename,
+      user_display_name,
+    } = res
 
-    const response = await wooCommerceApi.get('/customers', {
-      params: {
-        email: email,
-        per_page: 1,
-      },
-    });
+    if (token && user_email) {
+      return { email: user_email }
+    } else {
+      console.log('Fetching customer by email:', email);
 
-    if (!response.data || response.data.length === 0) {
-      throw new Error('Customer not found in WooCommerce');
+      const response = await wooCommerceApi.get('/customers', {
+        params: {
+          email: email,
+          per_page: 1,
+        },
+      });
+
+      if (!response.data || response.data.length === 0) {
+        throw new Error('Customer not found in WooCommerce');
+      }
+
+      const customer = response.data[0];
+      console.log('Customer fetched by email:', customer);
+      return customer;
     }
 
-    const customer = response.data[0];
-    console.log('Customer fetched by email:', customer);
-    return customer;
+
   } catch (error: any) {
     console.error('Error fetching customer by email:', error);
     throw new Error(error.response?.data?.message || 'Failed to fetch customer');
@@ -784,11 +820,16 @@ interface StoredWishlistItem {
 }
 
 // Helper function to get wishlist from localStorage
-const getWishlistFromStorage = (userId: number): StoredWishlistItem[] => {
+const getWishlistFromStorage = (userId: number): StoredWishlistItem[] | null => {
+  try {
+    if (Boolean(localStorage ?? false)) return null;
+  } catch (error) {
+    return null;
+  }
   try {
     const stored = localStorage.getItem(WISHLIST_STORAGE_KEY);
     if (!stored) return [];
-    
+
     const allWishlists = JSON.parse(stored);
     return allWishlists[userId] || [];
   } catch (error) {
@@ -799,6 +840,11 @@ const getWishlistFromStorage = (userId: number): StoredWishlistItem[] => {
 
 // Helper function to save wishlist to localStorage
 const saveWishlistToStorage = (userId: number, wishlist: StoredWishlistItem[]): void => {
+  try {
+    if (Boolean(localStorage ?? false)) return;
+  } catch (error) {
+    return;
+  }
   try {
     const stored = localStorage.getItem(WISHLIST_STORAGE_KEY);
     const allWishlists = stored ? JSON.parse(stored) : {};
@@ -813,10 +859,10 @@ const saveWishlistToStorage = (userId: number, wishlist: StoredWishlistItem[]): 
 export const getWishlistItems = async (userId: number): Promise<WishlistItem[]> => {
   try {
     console.log('Fetching wishlist items for user:', userId);
-    
+
     const storedItems = getWishlistFromStorage(userId);
     console.log('Stored wishlist items:', storedItems);
-    
+
     if (storedItems.length === 0) {
       return [];
     }
@@ -849,9 +895,9 @@ export const getWishlistItems = async (userId: number): Promise<WishlistItem[]> 
 export const addToWishlist = async (userId: number, productId: number): Promise<void> => {
   try {
     console.log('Adding to wishlist:', { userId, productId });
-    
+
     const wishlist = getWishlistFromStorage(userId);
-    
+
     // Check if item already exists
     const existingItem = wishlist.find(item => item.product_id === productId);
     if (existingItem) {
@@ -869,7 +915,7 @@ export const addToWishlist = async (userId: number, productId: number): Promise<
 
     wishlist.push(newItem);
     saveWishlistToStorage(userId, wishlist);
-    
+
     console.log('Item added to wishlist successfully');
   } catch (error: any) {
     console.error('Error adding to wishlist:', error);
@@ -880,12 +926,12 @@ export const addToWishlist = async (userId: number, productId: number): Promise<
 export const removeFromWishlist = async (userId: number, productId: number): Promise<void> => {
   try {
     console.log('Removing from wishlist:', { userId, productId });
-    
+
     const wishlist = getWishlistFromStorage(userId);
     const updatedWishlist = wishlist.filter(item => item.product_id !== productId);
-    
+
     saveWishlistToStorage(userId, updatedWishlist);
-    
+
     console.log('Item removed from wishlist successfully');
   } catch (error: any) {
     console.error('Error removing from wishlist:', error);
@@ -896,10 +942,10 @@ export const removeFromWishlist = async (userId: number, productId: number): Pro
 export const isInWishlist = async (userId: number, productId: number): Promise<boolean> => {
   try {
     console.log('Checking if in wishlist:', { userId, productId });
-    
+
     const wishlist = getWishlistFromStorage(userId);
     const found = wishlist.some(item => item.product_id === productId);
-    
+
     console.log('Item in wishlist:', found);
     return found;
   } catch (error: any) {

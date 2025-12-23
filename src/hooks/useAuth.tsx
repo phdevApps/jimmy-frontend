@@ -1,10 +1,11 @@
 
+"use client";
 import { useEffect, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from './useTypedSelector';
-import { validateSession, logout, fetchUserProfile } from '../features/auth/authSlice';
-import { validateJWTToken } from '../services/wooCommerceApi';
-import { AppDispatch } from '../store';
+import { validateSession, logout, fetchUserProfile } from '@/features/auth/authSlice';
+import { validateJWTToken } from '@/services/wooCommerceApi';
+import { AppDispatch } from '@/store';
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();

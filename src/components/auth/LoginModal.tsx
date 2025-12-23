@@ -1,21 +1,22 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { loginUser, registerUser, logout, toggleLoginModal } from '../../features/auth/authSlice';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '../ui/sheet';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { loginUser, registerUser, logout, toggleLoginModal } from '@/features/auth/authSlice';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { User, Mail, Lock, UserPlus, LogIn, BarChart3, CreditCard, Heart, Shield } from 'lucide-react';
-import { toast } from '../ui/sonner';
-import { AppDispatch } from '../../store';
-import { useLocation } from 'react-router-dom';
+import { toast } from '@/components/ui/sonner';
+import { AppDispatch } from '@/store';
+import { useRouter } from 'next/navigation';
 
 const LoginModal = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoginModalOpen, isAuthenticated, user, isLoading } = useTypedSelector(state => state.auth);
   
-  const location = useLocation();
+  const location = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',

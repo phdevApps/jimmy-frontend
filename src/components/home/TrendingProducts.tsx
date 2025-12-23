@@ -1,7 +1,8 @@
 
+"use client";
 import React, { useState, useEffect } from 'react';
-import { getProducts, Product } from '../../services/wooCommerceApi';
-import ProductCard from '../product/ProductCard';
+import { getProducts, Product } from '@/services/wooCommerceApi';
+import ProductCard from '@/components/product/ProductCard';
 
 const TrendingProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);

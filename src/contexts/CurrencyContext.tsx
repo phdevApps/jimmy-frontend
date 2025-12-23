@@ -1,7 +1,8 @@
 
+"use client";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import useSWR from 'swr';
-import { getStoreSettings } from '../services/wooCommerceApi';
+import { getStoreSettings } from '@/services/wooCommerceApi';
 
 interface CurrencyContextType {
   currency: 'AED' | 'SAR' | 'USD';
@@ -26,15 +27,20 @@ const fetcher = async (url: string) => {
 export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currency, setCurrencyState] = useState<'AED' | 'SAR' | 'USD'>('AED');
   const [storeBaseCurrency, setStoreBaseCurrency] = useState<string>('AED');
-  
+
   // Fetch store settings to get default currency
   useEffect(() => {
+    try {
+      if (Boolean(localStorage ?? false)) return;
+    } catch (error) {
+      return;
+    }
     const fetchStoreSettings = async () => {
       try {
         const settings = await getStoreSettings();
         console.log('Store base currency:', settings.currency);
         setStoreBaseCurrency(settings.currency);
-        
+
         // If no user preference is stored, use store default
         const stored = localStorage.getItem('selectedCurrency');
         if (!stored && ['AED', 'SAR', 'USD'].includes(settings.currency)) {
@@ -44,10 +50,10 @@ export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }
         console.error('Error fetching store settings:', error);
       }
     };
-    
+
     fetchStoreSettings();
   }, []);
-  
+
   // Fetch live exchange rates using a free API
   const { data: rates, error, isLoading } = useSWR(
     'https://api.exchangerate-api.com/v4/latest/AED', // Use AED as base since that's likely the store currency
@@ -68,6 +74,11 @@ export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }
   const rateMap = rates?.rates || defaultRates;
 
   const setCurrency = (newCurrency: 'AED' | 'SAR' | 'USD') => {
+    try {
+      if (Boolean(localStorage ?? false)) return;
+    } catch (error) {
+      return;
+    }
     setCurrencyState(newCurrency);
     localStorage.setItem('selectedCurrency', newCurrency);
   };
@@ -77,23 +88,28 @@ export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (storeBaseCurrency === currency) {
       return amount;
     }
-    
+
     // Convert from store base currency to selected currency
     // First convert to AED (our API base), then to target currency
     let amountInAED = amount;
-    
+
     // If store currency is not AED, convert to AED first
     if (storeBaseCurrency !== 'AED') {
       const storeToAEDRate = 1 / (rateMap[storeBaseCurrency] || 1);
       amountInAED = amount * storeToAEDRate;
     }
-    
+
     // Then convert to target currency
     const targetRate = rateMap[currency] || 1;
     return amountInAED * targetRate;
   };
 
   useEffect(() => {
+    try {
+      if (Boolean(localStorage ?? false)) return;
+    } catch (error) {
+      return;
+    }
     const stored = localStorage.getItem('selectedCurrency') as 'AED' | 'SAR' | 'USD' | null;
     if (stored && ['AED', 'SAR', 'USD'].includes(stored)) {
       setCurrencyState(stored);

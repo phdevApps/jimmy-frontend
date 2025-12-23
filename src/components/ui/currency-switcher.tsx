@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useCurrency } from '../../contexts/CurrencyContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 export const CurrencySwitcher: React.FC = () => {
   const { currency, setCurrency, isLoading } = useCurrency();

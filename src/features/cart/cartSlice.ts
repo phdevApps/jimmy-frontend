@@ -16,7 +16,13 @@ interface CartState {
 }
 
 // Helper functions for localStorage
-const loadCartFromStorage = (): CartItem[] => {
+const loadCartFromStorage = (): CartItem[] | null => {
+  try {
+    if (Boolean(localStorage ?? false)) return null;
+  } catch (error) {
+    return null;
+  }
+
   try {
     const savedCart = localStorage.getItem('cart');
     console.log('Loading cart from localStorage:', savedCart);
@@ -31,6 +37,11 @@ const loadCartFromStorage = (): CartItem[] => {
 
 const saveCartToStorage = (items: CartItem[]) => {
   try {
+    if (Boolean(localStorage ?? false)) return;
+  } catch (error) {
+    return;
+  }
+  try {
     console.log('Saving cart to localStorage:', items);
     localStorage.setItem('cart', JSON.stringify(items));
     console.log('Cart saved successfully');
@@ -40,7 +51,7 @@ const saveCartToStorage = (items: CartItem[]) => {
 };
 
 const calculateTotal = (items: CartItem[]): number => {
-  return items.reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0);
+  return (items??[]).reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0);
 };
 
 const initialItems = loadCartFromStorage();

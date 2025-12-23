@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useCurrency } from '../../contexts/CurrencyContext';
-import { getStoreSettings, WooCommerceSettings } from '../../services/wooCommerceApi';
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { getStoreSettings, WooCommerceSettings } from '@/services/wooCommerceApi';
 
 interface PriceProps {
   amount: number | string;

@@ -1,13 +1,14 @@
 
+"use client";
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Star, ShoppingBag, Heart } from 'lucide-react';
-import { addToCart } from '../../features/cart/cartSlice';
-import { useWishlist } from '../../hooks/useWishlist';
-import { useAuth } from '../../hooks/useAuth';
-import { Price } from '../ui/price';
-import { Product } from '../../services/wooCommerceApi';
+import { addToCart } from '@/features/cart/cartSlice';
+import { useWishlist } from '@/hooks/useWishlist';
+import { useAuth } from '@/hooks/useAuth';
+import { Price } from '@/components/ui/price';
+import { Product } from '@/services/wooCommerceApi';
 
 interface ProductCardProps {
   product: Product;
@@ -15,7 +16,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const { isAuthenticated } = useAuth();
   const { toggleWishlist, isInWishlist } = useWishlist();
 
@@ -34,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const handleProductClick = (productSlug: string) => {
-    navigate(`/products/${productSlug}`);
+    navigate.push(`/products/${productSlug}`);
   };
 
   return (

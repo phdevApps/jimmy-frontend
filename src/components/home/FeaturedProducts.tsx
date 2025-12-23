@@ -1,12 +1,14 @@
 
+"use client";
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Star, Heart } from 'lucide-react';
-import { getFeaturedProducts, Product } from '../../services/wooCommerceApi';
-import ProductCard from '../product/ProductCard';
+import { getFeaturedProducts, Product } from '@/services/wooCommerceApi';
+// import ProductCard from '@/components/product/ProductCard';
+import ProductCard from '@/components/product/ProductCard';
 
 const FeaturedProducts = () => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +31,7 @@ const FeaturedProducts = () => {
   }, []);
 
   const handleViewAll = () => {
-    navigate('/shop');
+    navigate.push('/shop');
   };
 
   if (isLoading) {

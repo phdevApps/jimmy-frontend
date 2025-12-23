@@ -1,4 +1,5 @@
 
+"use client";
 import React from 'react';
 import { Truck, Shield, Headphones, CreditCard, Award, Recycle } from 'lucide-react';
 

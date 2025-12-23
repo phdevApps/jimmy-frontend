@@ -1,12 +1,13 @@
 
+"use client";
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { Card, CardContent } from '../ui/card';
+import { useRouter, Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
 import { BarChart3, CreditCard, Heart, Shield, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const AccountSidebar = () => {
-  const location = useLocation();
+  const location = useRouter();
   
   const menuItems = [
     {
@@ -48,7 +49,7 @@ const AccountSidebar = () => {
             return (
               <Link
                 key={item.href}
-                to={item.href}
+                href={item.href}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                   isActive 

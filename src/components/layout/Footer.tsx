@@ -1,4 +1,5 @@
 
+"use client";
 import React, { useState } from 'react';
 import { Facebook, Instagram, Mail, Youtube, Twitter } from 'lucide-react';
 
@@ -69,12 +70,12 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
               <li><a href="/apps/track123" className="text-gray-300 hover:text-white transition-colors">Order Tracking</a></li>
-              <li><a href="/pages/avada-faqs" className="text-gray-300 hover:text-white transition-colors">FAQs</a></li>
-              <li><a href="/pages/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="/pages/product-care" className="text-gray-300 hover:text-white transition-colors">Product Care</a></li>
-              <li><a href="/pages/trouble-shooting" className="text-gray-300 hover:text-white transition-colors">Troubleshooting</a></li>
-              <li><a href="/pages/instruction-manual" className="text-gray-300 hover:text-white transition-colors">Instruction Manual</a></li>
-              <li><a href="/pages/warranty-guide" className="text-gray-300 hover:text-white transition-colors">Warranty Guide</a></li>
+              <li><a href="/avada-faqs" className="text-gray-300 hover:text-white transition-colors">FAQs</a></li>
+              <li><a href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
+              <li><a href="/product-care" className="text-gray-300 hover:text-white transition-colors">Product Care</a></li>
+              <li><a href="/trouble-shooting" className="text-gray-300 hover:text-white transition-colors">Troubleshooting</a></li>
+              <li><a href="/instruction-manual" className="text-gray-300 hover:text-white transition-colors">Instruction Manual</a></li>
+              <li><a href="/warranty-guide" className="text-gray-300 hover:text-white transition-colors">Warranty Guide</a></li>
             </ul>
           </div>
 

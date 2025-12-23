@@ -1,7 +1,8 @@
 
+"use client";
 import React from 'react';
 import { ArrowRight, Calendar, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const FeaturedBlogs = () => {
   const blogPosts = [
@@ -54,7 +55,7 @@ const FeaturedBlogs = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
-            <Link key={post.id} to={`/blogs/news/${post.slug}`} className="group">
+            <Link key={post.id} href={`/blogs/news/${post.slug}`} className="group">
               <article className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-gray-100">
                 {/* Featured Image */}
                 <div className="aspect-[4/3] overflow-hidden relative">
@@ -69,7 +70,7 @@ const FeaturedBlogs = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 {/* Content */}
                 <div className="p-8">
                   {/* Meta Info */}
@@ -88,15 +89,15 @@ const FeaturedBlogs = () => {
                       {post.readTime}
                     </span>
                   </div>
-                  
+
                   <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors leading-snug">
                     {post.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">
                     {post.excerpt}
                   </p>
-                  
+
                   <div className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold group/link">
                     Read Full Article
                     <ArrowRight className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
@@ -106,9 +107,9 @@ const FeaturedBlogs = () => {
             </Link>
           ))}
         </div>
-        
+
         <div className="text-center mt-16">
-          <Link to="/blogs/news">
+          <Link href="/blogs/news">
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
               View All Articles
             </button>

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { CurrencySymbol } from './currency-symbol';
-import { useCurrency } from '../../contexts/CurrencyContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 export const CurrencyDropdown: React.FC = () => {
   const { currency, setCurrency } = useCurrency();

@@ -1,4 +1,5 @@
 
+"use client";
 import React, { useState } from 'react';
 import { Play, Volume2 } from 'lucide-react';
 

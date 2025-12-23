@@ -1,10 +1,11 @@
 
+"use client";
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, Clock, TrendingUp, ArrowRight } from 'lucide-react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet';
-import { getProducts, getCategories, Product, Category } from '../../services/wooCommerceApi';
-import { useNavigate } from 'react-router-dom';
-import { Price } from '../ui/price';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { getProducts, getCategories, Product, Category } from '@/services/wooCommerceApi';
+import { useRouter } from 'next/navigation';
+import { Price } from '@/components/ui/price';
 
 interface SearchSidePanelProps {
   isOpen: boolean;
@@ -25,7 +26,7 @@ export const SearchSidePanel: React.FC<SearchSidePanelProps> = ({ isOpen, onClos
     'Wet Dry Vacuum'
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -34,6 +35,11 @@ export const SearchSidePanel: React.FC<SearchSidePanelProps> = ({ isOpen, onClos
   }, [isOpen]);
 
   useEffect(() => {
+    try {
+      if (Boolean(localStorage ?? false)) return;
+    } catch (error) {
+      return;
+    }
     const saved = localStorage.getItem('recentSearches');
     if (saved) {
       setRecentSearches(JSON.parse(saved));
@@ -61,7 +67,7 @@ export const SearchSidePanel: React.FC<SearchSidePanelProps> = ({ isOpen, onClos
           const filtered = products.filter(product =>
             product.name.toLowerCase().includes(query.toLowerCase()) ||
             product.description.toLowerCase().includes(query.toLowerCase()) ||
-            product.categories?.some(cat => 
+            product.categories?.some(cat =>
               cat.name.toLowerCase().includes(query.toLowerCase())
             )
           ).slice(0, 8);
@@ -81,18 +87,23 @@ export const SearchSidePanel: React.FC<SearchSidePanelProps> = ({ isOpen, onClos
   }, [query]);
 
   const handleSearch = (searchQuery: string) => {
+    try {
+      if (Boolean(localStorage ?? false)) return;
+    } catch (error) {
+      return;
+    }
     if (searchQuery.trim()) {
       const updated = [searchQuery, ...recentSearches.filter(s => s !== searchQuery)].slice(0, 5);
       setRecentSearches(updated);
       localStorage.setItem('recentSearches', JSON.stringify(updated));
-      
-      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+
+      navigate.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
       onClose();
     }
   };
 
   const handleProductClick = (product: Product) => {
-    navigate(`/products/${product.slug}`);
+    navigate.push(`/products/${product.slug}`);
     onClose();
   };
 
@@ -181,7 +192,7 @@ export const SearchSidePanel: React.FC<SearchSidePanelProps> = ({ isOpen, onClos
                       <button
                         key={category.id}
                         onClick={() => {
-                          navigate(`/category/${category.slug}`);
+                          navigate.push(`/category/${category.slug}`);
                           onClose();
                         }}
                         className="block w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors text-sm text-gray-700"

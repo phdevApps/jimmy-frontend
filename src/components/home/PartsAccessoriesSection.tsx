@@ -1,16 +1,18 @@
+"use client";
 
 import React, { useState, useEffect } from 'react';
-import { getCategories, Category } from '../../services/wooCommerceApi';
-import { useNavigate } from 'react-router-dom';
+import { getCategories, Category } from '@/services/wooCommerceApi';
+import { useRouter } from 'next/navigation';
+
 import { Wrench, Filter, Brush, Package } from 'lucide-react';
 
 const PartsAccessoriesSection = () => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Parts and Accessories categories
-  const partsCategories = [
+  const fallbackCategories:any = [
     {
       id: 1,
       name: "Cleaning Brush",
@@ -84,7 +86,7 @@ const PartsAccessoriesSection = () => {
   }, []);
 
   const handleCategoryClick = (category: Category) => {
-    navigate(`/collections/${category.slug}`);
+    navigate.push(`/collections/${category.slug}`);
   };
 
   if (isLoading) {

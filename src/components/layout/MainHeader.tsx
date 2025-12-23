@@ -1,26 +1,28 @@
 
+"use client";
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ShoppingBag, Heart, Search, Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { toggleCart } from '../../features/cart/cartSlice';
-import { useWishlist } from '../../hooks/useWishlist';
-import { SearchSidePanel } from '../search/SearchSidePanel';
-import { Button } from '../ui/button';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { toggleCart } from '@/features/cart/cartSlice';
+import { useWishlist } from '@/hooks/useWishlist';
+import { SearchSidePanel } from '@/components/search/SearchSidePanel';
+import { Button } from '@/components/ui/button';
 
 const MainHeader = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   const { items } = useTypedSelector(state => state.cart);
   const { isAuthenticated } = useTypedSelector(state => state.auth);
   const { wishlistItems } = useWishlist();
-  
-  const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  const cartItemCount = (items??[]).reduce((sum, item) => sum + item.quantity, 0);
   const wishlistItemCount = wishlistItems.length;
 
   // Keyboard shortcut for search
@@ -46,16 +48,16 @@ const MainHeader = () => {
 
   const handleWishlistClick = () => {
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate.push('/login');
     } else {
-      navigate('/wishlist');
+      navigate.push('/wishlist');
     }
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      navigate.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
   };
@@ -68,7 +70,7 @@ const MainHeader = () => {
       url: '/collections/anti-mite-vacuums'
     },
     {
-      name: 'Stick Vacuum Cleaner', 
+      name: 'Stick Vacuum Cleaner',
       image: 'https://jimmy.eu/cdn/shop/files/Jimmy_Cordless_Stick_Vacuum_Cleaner-250115-1.png?v=1736926721&width=670',
       url: '/collections/cordless-vacuums'
     },
@@ -91,12 +93,12 @@ const MainHeader = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link to="/" className="flex items-center">
-                <img 
-                  src="https://jimmy.eu/cdn/shop/files/Jimmy-Logo-512.png?v=1685779383" 
-                  alt="Jimmy" 
+              <Link href="/" className="flex items-center">
+                <img
+                  src="https://jimmy.eu/cdn/shop/files/Jimmy-Logo-512.png?v=1685779383"
+                  alt="Jimmy"
                   className="h-10 w-auto"
-                  width="512" 
+                  width="512"
                   height="178"
                 />
               </Link>
@@ -136,7 +138,7 @@ const MainHeader = () => {
                   </span>
                 )}
               </button>
-              
+
               <button
                 onClick={() => dispatch(toggleCart())}
                 className="p-2 text-gray-600 hover:text-blue-600 transition-colors relative"
@@ -154,21 +156,21 @@ const MainHeader = () => {
           {/* Navigation Menu */}
           <nav className="border-t border-gray-100">
             <div className="flex items-center space-x-8 py-3">
-              <Link to="/" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
+              <Link href="/" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
                 Home
               </Link>
-              
+
               {/* All Products Mega Menu */}
-              <div 
+              <div
                 className="relative group"
                 onMouseEnter={() => handleMenuEnter('products')}
                 onMouseLeave={handleMenuLeave}
               >
-                <Link to="/shop" className="text-gray-900 hover:text-blue-600 font-medium flex items-center transition-colors">
+                <Link href="/shop" className="text-gray-900 hover:text-blue-600 font-medium flex items-center transition-colors">
                   All Products
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </Link>
-                
+
                 {activeMenu === 'products' && (
                   <div className="absolute top-full left-0 w-screen max-w-4xl bg-white shadow-2xl rounded-lg border border-gray-200 z-[9999] transform -translate-x-1/4">
                     <div className="p-8">
@@ -179,31 +181,31 @@ const MainHeader = () => {
                           </h3>
                           <ul className="space-y-3">
                             <li>
-                              <Link to="/collections/anti-mite-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/anti-mite-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Bed Vacuum Cleaner</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/cordless-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/cordless-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Stick Vacuum Cleaner</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/wet-dry-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/wet-dry-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Wet Dry Vacuum Cleaner</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/countertop-water-purifier" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/countertop-water-purifier" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Countertop Water Purifier</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/hair-dryer" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/hair-dryer" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Hair Multi-Styler</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
@@ -215,7 +217,7 @@ const MainHeader = () => {
                           <div className="grid grid-cols-4 gap-4">
                             {megaMenuProducts.map((product, index) => (
                               <div key={index} className="group">
-                                <Link to={product.url} className="block">
+                                <Link href={product.url} className="block">
                                   <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden mb-3">
                                     <img
                                       src={product.image}
@@ -237,12 +239,12 @@ const MainHeader = () => {
                 )}
               </div>
 
-              <Link to="/collections/parts-accessories" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
+              <Link href="/collections/parts-accessories" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
                 Parts & Accessories
               </Link>
 
               {/* Support Dropdown */}
-              <div 
+              <div
                 className="relative group"
                 onMouseEnter={() => handleMenuEnter('support')}
                 onMouseLeave={handleMenuLeave}
@@ -251,28 +253,28 @@ const MainHeader = () => {
                   Support
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
-                
+
                 {activeMenu === 'support' && (
                   <div className="absolute top-full left-0 w-64 bg-white shadow-2xl rounded-lg border border-gray-200 z-[9999]">
                     <div className="p-4">
                       <ul className="space-y-2">
                         <li>
-                          <Link to="/pages/product-comparison" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/product-comparison" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Product Comparison
                           </Link>
                         </li>
                         <li>
-                          <Link to="/apps/track123" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/apps/track123" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Order Tracking
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/contact" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/contact" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Contact
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/avada-faqs" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/avada-faqs" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             FAQs
                           </Link>
                         </li>
@@ -282,7 +284,7 @@ const MainHeader = () => {
                 )}
               </div>
 
-              <Link to="/blogs/news" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
+              <Link href="/blogs/news" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
                 Blog
               </Link>
             </div>

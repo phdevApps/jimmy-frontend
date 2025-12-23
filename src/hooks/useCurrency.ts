@@ -1,6 +1,7 @@
 
+"use client";
 import { useState, useEffect } from 'react';
-import { getStoreSettings, formatPrice, WooCommerceSettings } from '../services/wooCommerceApi';
+import { getStoreSettings, formatPrice, WooCommerceSettings } from '@/services/wooCommerceApi';
 
 // Custom currency symbol mapping
 const getCurrencySymbol = (currencyCode: string): string => {

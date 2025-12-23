@@ -1,23 +1,24 @@
+"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link  from 'next/link';
 import { User, ShoppingBag, Heart, Search } from 'lucide-react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useWishlist } from '../../hooks/useWishlist';
-import { useCurrency } from '../../contexts/CurrencyContext';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { CurrencyDropdown } from '../ui/currency-dropdown';
-import LanguageSwitcher from '../language/LanguageSwitcher';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { Button } from '../ui/button';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useWishlist } from '@/hooks/useWishlist';
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { CurrencyDropdown } from '@/components/ui/currency-dropdown';
+import LanguageSwitcher from '@/components/language/LanguageSwitcher';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 
 const TopHeader = () => {
   const { items } = useTypedSelector(state => state.cart);
-  const { isAuthenticated, user } = useTypedSelector(state => state.auth);
+  const { isAuthenticated=false, user=null } = useTypedSelector(state => state.auth);
   const { wishlistItems } = useWishlist();
   
-  const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const wishlistItemCount = wishlistItems.length;
+  // const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  // const wishlistItemCount = wishlistItems.length;
 
   return (
     <div className="bg-gray-50 border-b border-gray-200">
@@ -26,7 +27,7 @@ const TopHeader = () => {
           {/* Left side - Welcome message */}
           <div className="flex items-center space-x-4">
             <span className="text-gray-600">
-              {isAuthenticated ? `Welcome back, ${user?.first_name}` : 'Welcome to Jimmy'}
+              {isAuthenticated ? `Welcome back, ${user?.first_name??"unknown"}` : 'Welcome to Jimmy'}
             </span>
           </div>
 
@@ -66,13 +67,13 @@ const TopHeader = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link href="/dashboard">Dashboard</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link to="/orders">Orders</Link>
+                    <Link href="/orders">Orders</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link to="/profile">Profile</Link>
+                    <Link href="/profile">Profile</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="text-red-600">
@@ -81,7 +82,7 @@ const TopHeader = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link to="/login" className="text-gray-600 hover:text-gray-900 flex items-center">
+              <Link href="/login" className="text-gray-600 hover:text-gray-900 flex items-center">
                 <User className="h-4 w-4 mr-1" />
                 Sign In
               </Link>

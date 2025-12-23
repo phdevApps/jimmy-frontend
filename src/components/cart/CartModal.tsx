@@ -1,8 +1,9 @@
+"use client";
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { closeCart, removeFromCart, updateQuantity } from '../../features/cart/cartSlice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { closeCart, removeFromCart, updateQuantity } from '@/features/cart/cartSlice';
 
 const CartModal = () => {
   const dispatch = useDispatch();

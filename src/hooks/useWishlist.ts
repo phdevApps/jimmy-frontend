@@ -1,7 +1,8 @@
 
+"use client";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from './useAuth';
-import { addToWishlist, removeFromWishlist, getWishlistItems } from '../services/wooCommerceApi';
+import { addToWishlist, removeFromWishlist, getWishlistItems } from '@/services/wooCommerceApi';
 import { useToast } from './use-toast';
 
 export const useWishlist = () => {

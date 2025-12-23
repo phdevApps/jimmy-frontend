@@ -1,7 +1,8 @@
 
+"use client";
 import React, { useState, useEffect } from 'react';
-import { getFeaturedProducts, Product } from '../../services/wooCommerceApi';
-import { useCurrency } from '../../hooks/useCurrency';
+import { getFeaturedProducts, Product } from '@/services/wooCommerceApi';
+import { useCurrency } from '@/hooks/useCurrency';
 
 const DetailedFeaturedSection = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);

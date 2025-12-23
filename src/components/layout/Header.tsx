@@ -1,23 +1,24 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useRouter, Link } from 'react-router-dom';
 import { ShoppingBag, User, Menu, X, ChevronDown, ChevronRight, Heart, Search } from 'lucide-react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { toggleCart } from '../../features/cart/cartSlice';
-import { logout } from '../../features/auth/authSlice';
-import { getCategories, getProducts, Category, Product } from '../../services/wooCommerceApi';
-import { useWishlist } from '../../hooks/useWishlist';
-import { useCurrency } from '../../contexts/CurrencyContext';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { CurrencySymbol } from '../ui/currency-symbol';
-import { CurrencyDropdown } from '../ui/currency-dropdown';
-import LanguageSwitcher from '../language/LanguageSwitcher';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { SearchSidePanel } from '../search/SearchSidePanel';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { toggleCart } from '@/features/cart/cartSlice';
+import { logout } from '@/features/auth/authSlice';
+import { getCategories, getProducts, Category, Product } from '@/services/wooCommerceApi';
+import { useWishlist } from '@/hooks/useWishlist';
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { CurrencySymbol } from '@/components/ui/currency-symbol';
+import { CurrencyDropdown } from '@/components/ui/currency-dropdown';
+import LanguageSwitcher from '@/components/language/LanguageSwitcher';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { SearchSidePanel } from '@/components/search/SearchSidePanel';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
@@ -71,22 +72,22 @@ const Header = () => {
 
   const handleWishlistClick = () => {
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate.push('/login');
     } else {
-      navigate('/wishlist');
+      navigate.push('/wishlist');
     }
   };
 
   const handleUserIconClick = () => {
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate.push('/login');
     }
   };
 
   const handleLogout = () => {
     console.log('Header: Logging out');
     dispatch(logout());
-    navigate('/');
+    navigate.push('/');
   };
 
   // Product images for mega menu (matching uae.jimmy.me)
@@ -144,7 +145,7 @@ const Header = () => {
 
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/" className="flex items-center">
+              <Link href="/" className="flex items-center">
                 <img 
                   src="https://jimmy.eu/cdn/shop/files/Jimmy-Logo-512.png?v=1685779383" 
                   alt="uae.jimmy.me" 
@@ -157,7 +158,7 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8 flex-1 justify-center">
-              <Link to="/" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
+              <Link href="/" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
                 Home
               </Link>
               
@@ -167,7 +168,7 @@ const Header = () => {
                 onMouseEnter={() => handleMenuEnter('bestsellers')}
                 onMouseLeave={handleMenuLeave}
               >
-                <Link to="/shop" className="text-gray-900 hover:text-blue-600 font-medium flex items-center transition-colors">
+                <Link href="/shop" className="text-gray-900 hover:text-blue-600 font-medium flex items-center transition-colors">
                   All Products
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </Link>
@@ -184,37 +185,37 @@ const Header = () => {
                           </h3>
                           <ul className="space-y-3">
                             <li>
-                              <Link to="/collections/anti-mite-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/anti-mite-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Bed Vacuum Cleaner</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/cordless-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/cordless-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Stick Vacuum Cleaner</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/wet-dry-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/wet-dry-vacuums" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Wet Dry Vacuum Cleaner</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/countertop-water-purifier" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/countertop-water-purifier" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Countertop Water Purifier</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/collections/hair-dryer" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/collections/hair-dryer" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Hair Multi-Styler</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
                             </li>
                             <li>
-                              <Link to="/pages/product-comparison" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
+                              <Link href="/product-comparison" className="flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors group/item">
                                 <span>Product Comparison</span>
                                 <ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                               </Link>
@@ -227,7 +228,7 @@ const Header = () => {
                           <div className="grid grid-cols-4 gap-4">
                             {megaMenuProducts.map((product, index) => (
                               <div key={index} className="group">
-                                <Link to={product.url} className="block">
+                                <Link href={product.url} className="block">
                                   <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden mb-3">
                                     <img
                                       src={product.image}
@@ -249,7 +250,7 @@ const Header = () => {
                 )}
               </div>
 
-              <Link to="/collections/parts-accessories" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
+              <Link href="/collections/parts-accessories" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
                 Parts & Accessories
               </Link>
 
@@ -269,42 +270,42 @@ const Header = () => {
                     <div className="p-4">
                       <ul className="space-y-2">
                         <li>
-                          <Link to="/pages/product-comparison" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/product-comparison" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Product Comparison
                           </Link>
                         </li>
                         <li>
-                          <Link to="/apps/track123" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/apps/track123" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Order Tracking
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/contact" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/contact" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Contact
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/avada-faqs" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/avada-faqs" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             FAQs
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/product-care" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/product-care" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Product Care
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/warranty-guide" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/warranty-guide" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Warranty Guide
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/trouble-shooting" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/trouble-shooting" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Troubleshooting
                           </Link>
                         </li>
                         <li>
-                          <Link to="/pages/instruction-manual" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
+                          <Link href="/instruction-manual" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors py-2">
                             Instruction Manual
                           </Link>
                         </li>
@@ -314,7 +315,7 @@ const Header = () => {
                 )}
               </div>
 
-              <Link to="/blogs/news" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
+              <Link href="/blogs/news" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
                 Blog
               </Link>
             </nav>
@@ -343,22 +344,22 @@ const Header = () => {
                       <p className="text-sm text-gray-500">{user?.email}</p>
                     </div>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigate('/dashboard')}>
+                    <DropdownMenuItem onClick={() => navigate.push('/dashboard')}>
                       Dashboard
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <DropdownMenuItem onClick={() => navigate.push('/profile')}>
                       Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate('/orders')}>
+                    <DropdownMenuItem onClick={() => navigate.push('/orders')}>
                       Orders
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate('/addresses')}>
+                    <DropdownMenuItem onClick={() => navigate.push('/addresses')}>
                       Addresses
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate('/payment-methods')}>
+                    <DropdownMenuItem onClick={() => navigate.push('/payment-methods')}>
                       Payment Methods
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate('/security')}>
+                    <DropdownMenuItem onClick={() => navigate.push('/security')}>
                       Security
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -420,11 +421,11 @@ const Header = () => {
                 </button>
               </div>
               
-              <Link to="/" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Home</Link>
-              <Link to="/shop" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">All Products</Link>
-              <Link to="/collections/parts-accessories" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Parts & Accessories</Link>
-              <Link to="/support" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Support</Link>
-              <Link to="/blogs/news" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Blog</Link>
+              <Link href="/" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Home</Link>
+              <Link href="/shop" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">All Products</Link>
+              <Link href="/collections/parts-accessories" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Parts & Accessories</Link>
+              <Link href="/support" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Support</Link>
+              <Link href="/blogs/news" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Blog</Link>
               
               {/* Social Links */}
               <div className="pt-4 border-t border-gray-100">

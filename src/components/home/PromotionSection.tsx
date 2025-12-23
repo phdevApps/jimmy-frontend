@@ -1,6 +1,7 @@
 
+"use client";
 import React, { useState, useEffect } from 'react';
-import { getCategories, Category } from '../../services/wooCommerceApi';
+import { getCategories, Category } from '@/services/wooCommerceApi';
 import { ArrowRight } from 'lucide-react';
 
 const PromotionSection = () => {

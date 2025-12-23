@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { authenticateCustomer, getUserProfile, updateCustomer, createCustomer, Customer } from '../../services/wooCommerceApi';
+import { authenticateCustomer, getUserProfile, updateCustomer, createCustomer, Customer } from '@/services/wooCommerceApi';
 
 interface User {
   id: number;
@@ -63,11 +63,11 @@ export const loginUser = createAsyncThunk(
 // New registration thunk
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async ({ email, password, firstName, lastName }: { 
-    email: string; 
-    password: string; 
-    firstName: string; 
-    lastName: string; 
+  async ({ email, password, firstName, lastName }: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
   }, { rejectWithValue }) => {
     try {
       console.log('registerUser: Creating new customer with email:', email);
@@ -77,7 +77,7 @@ export const registerUser = createAsyncThunk(
         last_name: lastName,
         password,
       });
-      
+
       // After creating customer, authenticate them
       const authResponse = await authenticateCustomer(email, password);
       console.log('registerUser: Registration and authentication successful');
@@ -124,6 +124,12 @@ export const updateUserProfile = createAsyncThunk(
 
 // Check for existing token and validate it
 const getInitialToken = () => {
+  try {
+    if (Boolean(localStorage ?? false)) return null;
+  } catch (error) {
+    return;
+  }
+
   const token = localStorage.getItem('token');
   if (token && token !== 'null' && token !== 'undefined') {
     console.log('getInitialToken: Found existing token');
@@ -135,6 +141,11 @@ const getInitialToken = () => {
 
 // Check for existing user data
 const getInitialUser = () => {
+  try {
+    if (Boolean(localStorage ?? false)) return;
+  } catch (error) {
+    return;
+  }
   const userData = localStorage.getItem('userData');
   if (userData && userData !== 'null' && userData !== 'undefined') {
     try {
@@ -172,13 +183,18 @@ const authSlice = createSlice({
       state.isLoading = action.payload;
     },
     logout: (state) => {
+      try {
+        if (Boolean(localStorage ?? false)) return;
+      } catch (error) {
+        return;
+      }
       console.log('logout: Clearing user session');
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
       state.isLoading = false;
       state.error = null;
-      
+
       // Clear localStorage
       localStorage.removeItem('token');
       localStorage.removeItem('userData');
@@ -191,11 +207,16 @@ const authSlice = createSlice({
       state.error = null;
     },
     validateSession: (state) => {
+      try {
+        if (Boolean(localStorage ?? false)) return;
+      } catch (error) {
+        return;
+      }
       console.log('validateSession: Checking session validity');
       // Check if session is still valid
       const token = localStorage.getItem('token');
       const userData = localStorage.getItem('userData');
-      
+
       if (!token || !userData || token === 'null' || userData === 'null') {
         console.log('validateSession: Invalid session, clearing state');
         state.user = null;
@@ -214,6 +235,11 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        try {
+          if (Boolean(localStorage ?? false)) return;
+        } catch (error) {
+          return;
+        }
         const { customer, token } = action.payload;
         state.user = {
           id: customer.id,
@@ -230,7 +256,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoginModalOpen = false;
         state.error = null;
-        
+
         // Persist to localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('userData', JSON.stringify(state.user));
@@ -248,6 +274,11 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
+        try {
+          if (Boolean(localStorage ?? false)) return;
+        } catch (error) {
+          return;
+        }
         const { customer, token } = action.payload;
         state.user = {
           id: customer.id,
@@ -264,7 +295,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoginModalOpen = false;
         state.error = null;
-        
+
         // Persist to localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('userData', JSON.stringify(state.user));
@@ -282,6 +313,11 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        try {
+          if (Boolean(localStorage ?? false)) return;
+        } catch (error) {
+          return;
+        }
         const customer = action.payload;
         state.user = {
           id: customer.id,
@@ -308,6 +344,13 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
+        try {
+          if (Boolean(localStorage ?? false)) return;
+        } catch (error) {
+          return;
+        }
+
+
         const customer = action.payload;
         state.user = {
           id: customer.id,
@@ -331,11 +374,11 @@ const authSlice = createSlice({
   },
 });
 
-export const { 
-  setLoading, 
-  logout, 
-  toggleLoginModal, 
+export const {
+  setLoading,
+  logout,
+  toggleLoginModal,
   clearError,
-  validateSession 
+  validateSession
 } = authSlice.actions;
 export default authSlice.reducer;

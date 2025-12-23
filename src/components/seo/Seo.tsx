@@ -1,8 +1,9 @@
+"use client";
 
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-interface SeoProps {
+export interface SeoProps {
   title: string;
   description: string;
   canonical: string;
@@ -20,7 +21,7 @@ export function Seo({
   openGraph = {},
   twitter = {},
   jsonLd
-}: SeoProps) {
+}: (SeoProps)) {
   return (
     <HelmetProvider>
       <Helmet>
