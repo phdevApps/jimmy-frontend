@@ -3,34 +3,34 @@ import { authenticateCustomer, getUserProfile, updateCustomer, createCustomer, C
 
 interface User {
   id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  username: string;
-  date_created: string;
+  email: string | null | undefined;
+  first_name: string | null | undefined;
+  last_name: string | null | undefined;
+  username: string | null | undefined;
+  date_created: string | null | undefined;
   billing: {
-    first_name: string;
-    last_name: string;
-    company: string;
-    address_1: string;
-    address_2: string;
-    city: string;
-    state: string;
-    postcode: string;
-    country: string;
-    email: string;
-    phone: string;
+    first_name: string | null | undefined;
+    last_name: string | null | undefined;
+    company: string | null | undefined;
+    address_1: string | null | undefined;
+    address_2: string | null | undefined;
+    city: string | null | undefined;
+    state: string | null | undefined;
+    postcode: string | null | undefined;
+    country: string | null | undefined;
+    email: string | null | undefined;
+    phone: string | null | undefined;
   };
   shipping: {
-    first_name: string;
-    last_name: string;
-    company: string;
-    address_1: string;
-    address_2: string;
-    city: string;
-    state: string;
-    postcode: string;
-    country: string;
+    first_name: string | null | undefined;
+    last_name: string | null | undefined;
+    company: string | null | undefined;
+    address_1: string | null | undefined;
+    address_2: string | null | undefined;
+    city: string | null | undefined;
+    state: string | null | undefined;
+    postcode: string | null | undefined;
+    country: string | null | undefined;
   };
 }
 
@@ -166,7 +166,7 @@ const initialUser = getInitialUser();
 
 const initialState: AuthState = {
   user: initialUser,
-  token: initialToken,
+  token: initialToken as (string | null),
   isAuthenticated: !!(initialToken && initialUser),
   isLoginModalOpen: false,
   isLoading: false,
@@ -279,13 +279,13 @@ const authSlice = createSlice({
         } catch (error) {
           return;
         }
-        const { customer, token } = action.payload;
+        const { customer, token }:(any|null|undefined) = action.payload ;
         state.user = {
           id: customer.id,
           email: customer.email,
+          username: customer.username,
           first_name: customer.first_name,
           last_name: customer.last_name,
-          username: customer.username,
           date_created: customer.date_created,
           billing: customer.billing,
           shipping: customer.shipping,

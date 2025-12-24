@@ -496,7 +496,7 @@ export const getCustomerByEmail = async (email: string, res: any): Promise<Custo
     } = res
 
     if (token && user_email) {
-      return { email: user_email }
+      return { email: user_email } as any
     } else {
       console.log('Fetching customer by email:', email);
 
@@ -576,7 +576,7 @@ export const getUserProfile = async (token: string): Promise<Customer> => {
     console.log('Extracted user email from JWT:', userEmail);
 
     // Fetch customer data using email
-    const customer = await getCustomerByEmail(userEmail);
+    const customer = await getCustomerByEmail(userEmail,{});
     console.log('Profile fetched successfully:', customer);
     return customer;
   } catch (error: any) {
@@ -860,10 +860,10 @@ export const getWishlistItems = async (userId: number): Promise<WishlistItem[]> 
   try {
     console.log('Fetching wishlist items for user:', userId);
 
-    const storedItems = getWishlistFromStorage(userId);
+    const storedItems = getWishlistFromStorage(userId) || [];
     console.log('Stored wishlist items:', storedItems);
 
-    if (storedItems.length === 0) {
+    if ((storedItems??[]).length === 0) {
       return [];
     }
 
@@ -896,7 +896,7 @@ export const addToWishlist = async (userId: number, productId: number): Promise<
   try {
     console.log('Adding to wishlist:', { userId, productId });
 
-    const wishlist = getWishlistFromStorage(userId);
+    const wishlist = getWishlistFromStorage(userId) || [];
 
     // Check if item already exists
     const existingItem = wishlist.find(item => item.product_id === productId);
@@ -927,7 +927,7 @@ export const removeFromWishlist = async (userId: number, productId: number): Pro
   try {
     console.log('Removing from wishlist:', { userId, productId });
 
-    const wishlist = getWishlistFromStorage(userId);
+    const wishlist = getWishlistFromStorage(userId) || [];
     const updatedWishlist = wishlist.filter(item => item.product_id !== productId);
 
     saveWishlistToStorage(userId, updatedWishlist);
@@ -943,7 +943,7 @@ export const isInWishlist = async (userId: number, productId: number): Promise<b
   try {
     console.log('Checking if in wishlist:', { userId, productId });
 
-    const wishlist = getWishlistFromStorage(userId);
+    const wishlist = getWishlistFromStorage(userId) || [];
     const found = wishlist.some(item => item.product_id === productId);
 
     console.log('Item in wishlist:', found);

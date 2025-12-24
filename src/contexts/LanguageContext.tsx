@@ -15,7 +15,7 @@ export const defaultLanguage = 'en';
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentLang, setCurrentLang] = useState<string>(() => {
+  const [currentLang, setCurrentLang] = useState<string | undefined>(() => {
     try {
       if (Boolean(localStorage ?? false)) return;
     } catch (error) {
@@ -36,6 +36,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return defaultLanguage;
   });
 
+
   useEffect(() => {
     try {
       if (Boolean(localStorage ?? false)) return;
@@ -43,13 +44,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return;
     }
     // Save to localStorage whenever language changes
-    localStorage.setItem('jimmy-language', currentLang);
+    localStorage.setItem('jimmy-language', currentLang as string);
 
     // Set cookie for server-side detection (if needed)
     document.cookie = `jimmy-language=${currentLang}; path=/; max-age=31536000`; // 1 year
 
     // Set document language attribute
-    document.documentElement.lang = currentLang;
+    document.documentElement.lang = currentLang as string;
   }, [currentLang]);
 
   const isLanguageSupported = (language: string): boolean => {
@@ -62,7 +63,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const contextValue: LanguageContextType = {
-    currentLang,
+    currentLang: currentLang as any,
     supportedLanguages,
     switchLanguage,
     isLanguageSupported,

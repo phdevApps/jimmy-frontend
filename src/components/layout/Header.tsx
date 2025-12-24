@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter, Link } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ShoppingBag, User, Menu, X, ChevronDown, ChevronRight, Heart, Search } from 'lucide-react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { toggleCart } from '@/features/cart/cartSlice';
@@ -98,7 +99,7 @@ const Header = () => {
       url: '/collections/anti-mite-vacuums'
     },
     {
-      name: 'Stick Vacuum Cleaner', 
+      name: 'Stick Vacuum Cleaner',
       image: 'https://jimmy.eu/cdn/shop/files/Jimmy_Cordless_Stick_Vacuum_Cleaner-250115-1.png?v=1736926721&width=670',
       url: '/collections/cordless-vacuums'
     },
@@ -146,11 +147,11 @@ const Header = () => {
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="flex items-center">
-                <img 
-                  src="https://jimmy.eu/cdn/shop/files/Jimmy-Logo-512.png?v=1685779383" 
-                  alt="uae.jimmy.me" 
+                <img
+                  src="https://jimmy.eu/cdn/shop/files/Jimmy-Logo-512.png?v=1685779383"
+                  alt="uae.jimmy.me"
                   className="h-12 w-auto"
-                  width="512" 
+                  width="512"
                   height="178"
                 />
               </Link>
@@ -161,9 +162,9 @@ const Header = () => {
               <Link href="/" className="text-gray-900 hover:text-blue-600 font-medium transition-colors">
                 Home
               </Link>
-              
+
               {/* Bestsellers Mega Menu - Updated to redirect to shop */}
-              <div 
+              <div
                 className="relative group"
                 onMouseEnter={() => handleMenuEnter('bestsellers')}
                 onMouseLeave={handleMenuLeave}
@@ -172,7 +173,7 @@ const Header = () => {
                   All Products
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </Link>
-                
+
                 {/* Mega Menu Dropdown */}
                 {activeMenu === 'bestsellers' && (
                   <div className="absolute top-full left-0 w-screen max-w-4xl bg-white shadow-2xl rounded-lg border border-gray-200 z-[9999] transform -translate-x-1/4">
@@ -255,7 +256,7 @@ const Header = () => {
               </Link>
 
               {/* Support Dropdown */}
-              <div 
+              <div
                 className="relative group"
                 onMouseEnter={() => handleMenuEnter('support')}
                 onMouseLeave={handleMenuLeave}
@@ -264,7 +265,7 @@ const Header = () => {
                   Support
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
-                
+
                 {activeMenu === 'support' && (
                   <div className="absolute top-full left-0 w-64 bg-white shadow-2xl rounded-lg border border-gray-200 z-[9999]">
                     <div className="p-4">
@@ -323,7 +324,7 @@ const Header = () => {
             {/* Right Icons */}
             <div className="flex items-center space-x-4">
               {/* Search Icon Button */}
-              <button 
+              <button
                 className="p-2 text-gray-600 hover:text-blue-600 transition-colors"
                 onClick={() => setIsSearchOpen(true)}
               >
@@ -376,7 +377,7 @@ const Header = () => {
                   <User className="h-6 w-6" />
                 </button>
               )}
-              
+
               <button
                 onClick={handleWishlistClick}
                 className="p-2 text-gray-600 hover:text-blue-600 transition-colors relative"
@@ -388,7 +389,7 @@ const Header = () => {
                   </span>
                 )}
               </button>
-              
+
               <button
                 onClick={() => dispatch(toggleCart())}
                 className="p-2 text-gray-600 hover:text-blue-600 transition-colors relative"
@@ -409,7 +410,7 @@ const Header = () => {
           <div className="md:hidden bg-white border-t border-gray-100">
             <div className="px-4 py-2 space-y-2">
               <div className="relative mb-4">
-                <button 
+                <button
                   onClick={() => {
                     setIsSearchOpen(true);
                     setIsMenuOpen(false);
@@ -420,13 +421,13 @@ const Header = () => {
                   <span className="text-gray-500 flex-1">Search for anything</span>
                 </button>
               </div>
-              
+
               <Link href="/" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Home</Link>
               <Link href="/shop" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">All Products</Link>
               <Link href="/collections/parts-accessories" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Parts & Accessories</Link>
               <Link href="/support" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Support</Link>
               <Link href="/blogs/news" className="block py-2 text-gray-900 hover:text-blue-600 font-medium">Blog</Link>
-              
+
               {/* Social Links */}
               <div className="pt-4 border-t border-gray-100">
                 <div className="flex space-x-4">

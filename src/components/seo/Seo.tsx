@@ -21,27 +21,27 @@ export function Seo({
   openGraph = {},
   twitter = {},
   jsonLd
-}: (SeoProps)) {
+}: (SeoProps | any)) {
   return (
     <HelmetProvider>
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonical} />
-        
+
         {/* Default image for Open Graph */}
         {image && <meta property="og:image" content={image} />}
-        
+
         {/* Open Graph tags */}
         {Object.entries(openGraph).map(([key, val]) => (
-          <meta key={`og:${key}`} property={`og:${key}`} content={val} />
+          <meta key={`og:${key}`} property={`og:${key}`} content={val as string || ""} />
         ))}
-        
+
         {/* Twitter Card tags */}
         {Object.entries(twitter).map(([key, val]) => (
-          <meta key={`twitter:${key}`} name={`twitter:${key}`} content={val} />
+          <meta key={`twitter:${key}`} name={`twitter:${key}`} content={val as string || ""} />
         ))}
-        
+
         {/* JSON-LD Schema */}
         {jsonLd && (
           <script type="application/ld+json">

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingBagIcon} from 'lucide-react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { removeFromCart, updateQuantity } from '@/features/cart/cartSlice';
 import { Button } from '@/components/ui/button';
@@ -11,14 +11,14 @@ import { Price } from '@/components/ui/price';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { items, total } = useTypedSelector(state => state.cart);
+  const { items = [], total } = useTypedSelector(state => state.cart);
 
-  if (items.length === 0) {
+  if ((items??[]).length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-16">
-            <ShoppingBag className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <ShoppingBagIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
             <p className="text-gray-600 mb-8">Add some products to your cart to get started.</p>
             <Button onClick={() => window.location.href = '/products'}>
@@ -29,6 +29,7 @@ const Cart = () => {
       </div>
     );
   }
+  // return "hi"
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">

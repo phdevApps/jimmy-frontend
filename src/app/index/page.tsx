@@ -14,16 +14,16 @@ import CustomerTestimonials from '@/components/home/CustomerTestimonials';
 import FeaturedBlogs from '@/components/home/FeaturedBlogs';
 import PromotionSection from '@/components/home/PromotionSection';
 import { Seo } from '@/components/seo/Seo';
-import { useYoastSeo } from '@/hooks/useYoastSeo';
+import { useYoastSeo,YoastSeoData } from '@/hooks/useYoastSeo';
 
 const Index = () => {
   const { currentLang } = useLanguage();
-  const [homePageSeo, setHomePageSeo] = useState(null);
+  const [homePageSeo, setHomePageSeo] = useState<YoastSeoData | undefined>(undefined);
 
   useEffect(() => {
     const fetchSeoData = async () => {
       try {
-        const seoData = await getHomePageSeo();
+        const seoData = await getHomePageSeo() as (YoastSeoData | undefined);
         setHomePageSeo(seoData);
       } catch (error) {
         console.error('Error fetching home page SEO data:', error);

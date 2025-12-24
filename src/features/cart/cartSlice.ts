@@ -58,9 +58,9 @@ const initialItems = loadCartFromStorage();
 console.log('Initial cart items on store creation:', initialItems);
 
 const initialState: CartState = {
-  items: initialItems,
+  items: initialItems as CartItem[],
   isOpen: false,
-  total: calculateTotal(initialItems),
+  total: calculateTotal(initialItems as CartItem[]),
 };
 
 console.log('Initial cart state:', initialState);

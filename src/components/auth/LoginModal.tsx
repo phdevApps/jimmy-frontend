@@ -10,13 +10,13 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '
 import { User, Mail, Lock, UserPlus, LogIn, BarChart3, CreditCard, Heart, Shield } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
 import { AppDispatch } from '@/store';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const LoginModal = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoginModalOpen, isAuthenticated, user, isLoading } = useTypedSelector(state => state.auth);
-  
-  const location = useRouter();
+
+  const location = usePathname();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
@@ -37,10 +37,10 @@ const LoginModal = () => {
   // Close modal when navigating to account pages
   useEffect(() => {
     const accountPages = ['/dashboard', '/profile', '/payment-methods', '/wishlist', '/security', '/orders', '/addresses'];
-    if (accountPages.includes(location.pathname) && isLoginModalOpen) {
+    if (accountPages.includes(location) && isLoginModalOpen) {
       dispatch(toggleLoginModal());
     }
-  }, [location.pathname, isLoginModalOpen, dispatch]);
+  }, [location, isLoginModalOpen, dispatch]);
 
   // Account menu items - same as AccountSidebar
   const accountMenuItems = [
@@ -80,7 +80,7 @@ const LoginModal = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isLogin && formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -89,9 +89,9 @@ const LoginModal = () => {
     try {
       if (isLogin) {
         console.log('LoginModal: Attempting login');
-        await dispatch(loginUser({ 
-          email: formData.email, 
-          password: formData.password 
+        await dispatch(loginUser({
+          email: formData.email,
+          password: formData.password
         })).unwrap();
       } else {
         console.log('LoginModal: Attempting registration');
@@ -102,7 +102,7 @@ const LoginModal = () => {
           lastName: formData.lastName,
         })).unwrap();
       }
-      
+
       toast.success(`Successfully ${isLogin ? 'signed in' : 'registered'} as ${formData.email}`);
 
       // Clear form data
@@ -113,9 +113,9 @@ const LoginModal = () => {
         lastName: '',
         confirmPassword: ''
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('LoginModal: Authentication error:', error);
-      toast.error(error || `${isLogin ? 'Authentication' : 'Registration'} failed. Please try again.`);
+      toast.error(error.message || `${isLogin ? 'Authentication' : 'Registration'} failed. Please try again.`);
     }
   };
 
@@ -154,8 +154,8 @@ const LoginModal = () => {
 
               {accountMenuItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = location.pathname === item.href;
-                
+                const isActive = location === item.href;
+
                 return (
                   <Button
                     key={item.href}
@@ -170,8 +170,8 @@ const LoginModal = () => {
               })}
 
               <div className="pt-4 border-t">
-                <Button 
-                  variant="destructive" 
+                <Button
+                  variant="destructive"
                   className="w-full"
                   onClick={handleLogout}
                 >
@@ -264,8 +264,8 @@ const LoginModal = () => {
             </form>
 
             <div className="text-center">
-              <Button 
-                variant="link" 
+              <Button
+                variant="link"
                 onClick={() => setIsLogin(!isLogin)}
               >
                 {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}

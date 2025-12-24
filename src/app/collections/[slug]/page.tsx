@@ -80,7 +80,7 @@ const CategoryProducts = () => {
             count: 0,
             display: "default",
             menu_order: 0,
-            image: null
+            image: undefined
           };
         }
         
@@ -287,7 +287,7 @@ const CategoryProducts = () => {
         <div className="bg-white border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <button
-              onClick={() => navigate.push(-1)}
+              onClick={() => navigate.push('/')}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800 text-sm"
             >
               <ArrowLeft className="h-4 w-4" />

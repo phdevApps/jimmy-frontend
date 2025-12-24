@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin } from 'lucide-react';
 import { Seo } from '@/components/seo/Seo';
 
@@ -60,7 +61,7 @@ const BlogPost = () => {
       tags: ["Vacuum Cleaner", "Technology", "Home Cleaning", "PW11 Pro Max"],
       readTime: "5 min read"
     };
-    
+
     setPost(mockPost);
     setIsLoading(false);
   }, [slug]);
@@ -88,25 +89,25 @@ const BlogPost = () => {
 
   return (
     <>
-      <Seo 
+      <Seo
         title={post.title}
         description={post.excerpt}
         canonical={window.location.href}
         image={post.image}
       />
-      
+
       <article className="min-h-screen bg-white">
         {/* Header */}
         <div className="bg-gray-50 py-8">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Link 
-              href="/blogs/news" 
+            <Link
+              href="/blogs/news"
               className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Blog
             </Link>
-            
+
             <div className="space-y-4">
               <div className="flex flex-wrap items-center text-sm text-gray-600 space-x-4">
                 <div className="flex items-center">
@@ -123,14 +124,14 @@ const BlogPost = () => {
                 </div>
                 <span>{post.readTime}</span>
               </div>
-              
+
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                 {post.title}
               </h1>
-              
+
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag, index) => (
-                  <span 
+                  <span
                     key={index}
                     className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full"
                   >
@@ -158,11 +159,11 @@ const BlogPost = () => {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-3">
-              <div 
+              <div
                 className="prose prose-lg max-w-none"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
-              
+
               {/* Share Buttons */}
               <div className="mt-12 pt-8 border-t border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Share this article</h3>

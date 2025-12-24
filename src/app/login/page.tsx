@@ -17,7 +17,7 @@ const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useRouter();
   const { isAuthenticated, user, isLoading, error } = useTypedSelector(state => state.auth);
-  
+
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
@@ -49,7 +49,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isLogin && formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -58,9 +58,9 @@ const Login = () => {
     try {
       if (isLogin) {
         console.log('Login: Attempting login');
-        await dispatch(loginUser({ 
-          email: formData.email, 
-          password: formData.password 
+        await dispatch(loginUser({
+          email: formData.email,
+          password: formData.password
         })).unwrap();
       } else {
         console.log('Login: Attempting registration');
@@ -71,7 +71,7 @@ const Login = () => {
           lastName: formData.lastName,
         })).unwrap();
       }
-      
+
       toast.success(`Successfully ${isLogin ? 'signed in' : 'registered'} as ${formData.email}`);
 
       // Clear form data
@@ -85,9 +85,9 @@ const Login = () => {
 
       // Navigate to dashboard
       navigate.push('/dashboard');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login: Authentication error:', error);
-      toast.error(error || `${isLogin ? 'Authentication' : 'Registration'} failed. Please try again.`);
+      toast.error(error.message as string || `${isLogin ? 'Authentication' : 'Registration'} failed. Please try again.`);
     }
   };
 
@@ -96,8 +96,8 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <a href="/" className="inline-block mb-8">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 201.46 33.55"
               className="h-8 w-auto"
             >
@@ -106,11 +106,11 @@ const Login = () => {
                   {`.st0 { fill: #003685; }`}
                 </style>
               </defs>
-              <rect className="st0" x="42.13" y=".06" width="6.32" height="33.43" rx=".36" ry=".36"/>
-              <path className="st0" d="M100.91.06h-5.59c-.22,0-.43.1-.57.28l-15.49,19.61c-.22.28-.66.28-.88,0L62.89.33c-.14-.17-.35-.28-.57-.28h-5.59c-.2,0-.36.16-.36.36v32.7c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36,0-3.1,0-25.09,0-25.09l15.78,19.98c.18.23.52.23.7,0l15.78-19.98v25.09c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36V.42c0-.2-.16-.36-.36-.36Z"/>
-              <path className="st0" d="M153.73.06h-5.59c-.22,0-.43.1-.57.28l-15.49,19.61c-.22.28-.66.28-.88,0L115.71.33c-.14-.17-.35-.28-.57-.28h-5.59c-.2,0-.36.16-.36.36v32.7c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36V8.03l15.78,19.98c.18.23.52.23.7,0l15.78-19.98v25.09c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36V.42c0-.2-.16-.36-.36-.36Z"/>
-              <path className="st0" d="M201.1.06h-5.46c-.21,0-.41.09-.54.24l-14.52,16.44c-.21.24-.58.24-.78,0L165.28.3c-.14-.16-.34-.24-.54-.24h-5.46c-.31,0-.48.37-.27.6l16.32,18.47c1.1,1.25,1.71,2.85,1.71,4.51v9.48c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36v-9.48c0-1.66.61-3.27,1.71-4.51L201.37.66c.21-.23.04-.6-.27-.6Z"/>
-              <path className="st0" d="M34.13,0h-6.28c-.2,0-.36.16-.36.36v24.8c0,.93-.37,1.82-1.02,2.48l-.34.34c-.66.66-1.56,1.04-2.49,1.04H4.06c-.32,0-.63.14-.85.39L.08,32.99c-.19.22-.04.56.25.56h26.84c1.54,0,3.02-.61,4.11-1.7l1.51-1.51c1.08-1.09,1.69-2.56,1.69-4.1V.36c0-.2-.16-.36-.36-.36Z"/>
+              <rect className="st0" x="42.13" y=".06" width="6.32" height="33.43" rx=".36" ry=".36" />
+              <path className="st0" d="M100.91.06h-5.59c-.22,0-.43.1-.57.28l-15.49,19.61c-.22.28-.66.28-.88,0L62.89.33c-.14-.17-.35-.28-.57-.28h-5.59c-.2,0-.36.16-.36.36v32.7c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36,0-3.1,0-25.09,0-25.09l15.78,19.98c.18.23.52.23.7,0l15.78-19.98v25.09c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36V.42c0-.2-.16-.36-.36-.36Z" />
+              <path className="st0" d="M153.73.06h-5.59c-.22,0-.43.1-.57.28l-15.49,19.61c-.22.28-.66.28-.88,0L115.71.33c-.14-.17-.35-.28-.57-.28h-5.59c-.2,0-.36.16-.36.36v32.7c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36V8.03l15.78,19.98c.18.23.52.23.7,0l15.78-19.98v25.09c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36V.42c0-.2-.16-.36-.36-.36Z" />
+              <path className="st0" d="M201.1.06h-5.46c-.21,0-.41.09-.54.24l-14.52,16.44c-.21.24-.58.24-.78,0L165.28.3c-.14-.16-.34-.24-.54-.24h-5.46c-.31,0-.48.37-.27.6l16.32,18.47c1.1,1.25,1.71,2.85,1.71,4.51v9.48c0,.2.16.36.36.36h5.59c.2,0,.36-.16.36-.36v-9.48c0-1.66.61-3.27,1.71-4.51L201.37.66c.21-.23.04-.6-.27-.6Z" />
+              <path className="st0" d="M34.13,0h-6.28c-.2,0-.36.16-.36.36v24.8c0,.93-.37,1.82-1.02,2.48l-.34.34c-.66.66-1.56,1.04-2.49,1.04H4.06c-.32,0-.63.14-.85.39L.08,32.99c-.19.22-.04.56.25.56h26.84c1.54,0,3.02-.61,4.11-1.7l1.51-1.51c1.08-1.09,1.69-2.56,1.69-4.1V.36c0-.2-.16-.36-.36-.36Z" />
             </svg>
           </a>
         </div>
@@ -204,8 +204,8 @@ const Login = () => {
             </form>
 
             <div className="text-center mt-4">
-              <Button 
-                variant="link" 
+              <Button
+                variant="link"
                 onClick={() => setIsLogin(!isLogin)}
                 className="text-sm"
               >

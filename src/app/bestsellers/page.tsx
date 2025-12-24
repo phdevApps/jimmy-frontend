@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { getFeaturedProducts, Product } from '@/services/wooCommerceApi';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { addToCart } from '@/features/cart/cartSlice';
 import { Star, ShoppingBag, TrendingUp, Heart, Trash2 } from 'lucide-react';
 import { useWishlist } from '@/hooks/useWishlist';

@@ -57,7 +57,7 @@ const MainHeader = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      navigate.push(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
   };

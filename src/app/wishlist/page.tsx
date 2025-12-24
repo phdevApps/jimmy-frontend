@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Heart, ShoppingCart, Trash2, Loader2, Star } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { addToCart } from '@/features/cart/cartSlice';
 import AccountSidebar from '@/components/account/AccountSidebar';
 import { getWishlistItems, removeFromWishlist, WishlistItem } from '@/services/wooCommerceApi';

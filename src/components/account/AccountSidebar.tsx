@@ -1,14 +1,15 @@
 
 "use client";
 import React from 'react';
-import { useRouter, Link } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { BarChart3, CreditCard, Heart, Shield, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const AccountSidebar = () => {
-  const location = useRouter();
-  
+ const location = usePathname();
+
   const menuItems = [
     {
       title: 'Dashboard',
@@ -44,16 +45,16 @@ const AccountSidebar = () => {
         <nav className="space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            const isActive = location.pathname === item.href;
-            
+            const isActive = location === item.href;
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                  isActive 
-                    ? "bg-primary text-primary-foreground" 
+                  isActive
+                    ? "bg-primary text-primary-foreground"
                     : "hover:bg-muted text-muted-foreground hover:text-foreground"
                 )}
               >
