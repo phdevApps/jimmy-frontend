@@ -57,7 +57,7 @@ interface SavedAddress {
 
 const Checkout = () => {
   return <div>
-  Checkout page
+    Checkout page 
   </div>;
 }
 
